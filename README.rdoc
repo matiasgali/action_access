@@ -1,4 +1,0 @@
-= ActionAccess
-
-Action Access is an access control system for Ruby on Rails. It provides a
-modular and easy way to secure applications and handle permissions.
