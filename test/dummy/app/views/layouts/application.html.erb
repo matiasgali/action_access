@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dummy</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <title>ActionAccess Dummy App</title>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if message = flash[:notice] || flash[:alert] %>
+    <p><%= message %></p>
+  <% end %>
 
-<%= yield %>
-
+  <%= yield %>
 </body>
 </html>
