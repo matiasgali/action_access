@@ -1,13 +1,27 @@
 module ActionAccess
   module ControllerAdditions
     module ClassMethods
+      # Lock actions by default, they won't be accessible unless authorized.
+      # It takes the same options as filter callbacks.
+      def lock_access(options = {})
+        before_action :validate_access!, options
+      end
+
+      # Is this controller locked?
+      def access_locked?
+        filters = _process_action_callbacks.collect(&:filter)
+        :validate_access!.in? filters
+      end
+
       # Set an access rule for the current controller.
+      # It will automatically lock the controller if it wasn't already.
       #
       # == Example:
       # Add the following to ArticlesController to allow admins to edit articles.
       #   let :admin, [:edit, :update]
       #
       def let(clearance_level, permissions)
+        lock_access unless access_locked?
         keeper = ActionAccess::Keeper.instance
         keeper.let clearance_level, permissions, self
       end

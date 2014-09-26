@@ -1,7 +1,4 @@
 class ArticlesController < ApplicationController
-  include ActionAccess::ControllerAdditions
-  before_action :validate_access!
-
   let :admin, :all
   let :editor, [:index, :show, :edit, :update]
   let :user, [:index, :show]
@@ -36,11 +33,4 @@ class ArticlesController < ApplicationController
   def destroy
     redirect_to articles_url, notice: 'Article was successfully destroyed.'
   end
-
-
-  private
-
-    def current_clearance_level
-      session[:role] || :guest
-    end
 end
