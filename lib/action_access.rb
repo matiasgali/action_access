@@ -1,6 +1,14 @@
 require 'singleton'
 require 'action_access/version'
-require 'action_access/keeper'
-require 'action_access/controller_additions'
-require 'action_access/model_additions'
-require 'action_access/user_utilities'
+require 'action_access/railtie'
+
+module ActionAccess
+  extend ActiveSupport::Autoload
+
+  eager_autoload do
+    autoload :Keeper
+    autoload :ControllerAdditions
+    autoload :ModelAdditions
+    autoload :UserUtilities
+  end
+end
