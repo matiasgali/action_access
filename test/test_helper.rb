@@ -1,8 +1,12 @@
 # Configure Rails Environment
 ENV['RAILS_ENV'] = 'test'
 
-require File.expand_path('../dummy/config/environment.rb',  __FILE__)
+require 'dummy/config/environment.rb'
 require 'rails/test_help'
 require 'minitest/pride'
+
+# Run migrations for in-memory SQLite database
+ActiveRecord::Migration.verbose = false
+ActiveRecord::Migrator.migrate(File.expand_path('../dummy/db/migrate/', __FILE__))
 
 Rails.backtrace_cleaner.remove_silencers!

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    action_access (0.0.1)
+    action_access (0.0.2)
       rails (~> 4.1)
 
 GEM
@@ -42,7 +42,7 @@ GEM
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     mime-types (2.3)
-    minitest (5.4.1)
+    minitest (5.4.2)
     multi_json (1.10.1)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -84,4 +84,6 @@ PLATFORMS
 
 DEPENDENCIES
   action_access!
+  bundler (~> 1.6)
+  rake (~> 10.0)
   sqlite3
