@@ -263,9 +263,9 @@ The **keeper** is the core of Action Access, it's the one that registers
 permissions and who decides if a clearance level grants access or not.
 
 It's available as `keeper` within controllers and views and as
-`ActionAccess::Keeper.instance` anywhere else. You can use it check permissions
-with the `lets?` method that takes the clearance level as the first argument,
-the rest are the same as `can?`.
+`ActionAccess::Keeper.instance` anywhere else. You can use it to check
+permissions with the `lets?` method, which takes the clearance level as the
+first argument and the rest are the same as for `can?`.
 
 ```ruby
 # Filter a list of users to only those allowed to edit articles.
