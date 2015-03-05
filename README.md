@@ -1,4 +1,6 @@
 # Action Access
+
+[![Join the chat at https://gitter.im/matiasgagliano/action_access](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/matiasgagliano/action_access?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/matiasgagliano/action_access.svg?branch=v0.0.2)](https://travis-ci.org/matiasgagliano/action_access)
 [![Security](https://hakiri.io/github/matiasgagliano/action_access/master.svg)](https://hakiri.io/github/matiasgagliano/action_access/master)
 
