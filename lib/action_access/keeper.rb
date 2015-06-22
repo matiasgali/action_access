@@ -34,7 +34,7 @@ module ActionAccess
     #
     # Clearance level and resource can be either plural or singular.
     #
-    # Examples:
+    # == Examples:
     #   lets? :users, :create, :profiles
     #   lets? :users, :create, @profile
     #   lets? :users, :create, ProfilesController
