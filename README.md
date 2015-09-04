@@ -162,7 +162,7 @@ very clear `unauthorized_access_redirection_path` method.
 ```ruby
 class ApplicationController < ActionController::Base
 
-  def unathorized_access_redirection_path
+  def unauthorized_access_redirection_path
     case current_user.clearance_level.to_sym
       when :admin then admin_root_path
       when :user  then user_root_path
