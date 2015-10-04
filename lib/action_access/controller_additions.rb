@@ -44,7 +44,7 @@ module ActionAccess
       # Clearance level of the current user (override to customize).
       def current_clearance_level
         if defined? current_user and current_user.respond_to?(:clearance_level)
-          current_user.clearance_level.to_s.to_sym
+          [*current_user.clearance_level].each { |x| x.to_s.to_sym }
         else
           :guest
         end
