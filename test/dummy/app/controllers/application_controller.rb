@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def current_clearance_level
-      session[:role] || :guest
+    def current_clearance_levels
+      session[:roles] || :guest
     end
 end

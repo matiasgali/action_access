@@ -7,10 +7,10 @@ module ActionAccess
     end
 
     # Set clearance to perform actions over a resource.
-    #
     # Clearance level and resource can be either plural or singular.
     #
     # == Examples:
+    #
     #   let :user, :show, :profile
     #   let :user, :show, @profile
     #   let :user, :show, ProfilesController
@@ -26,15 +26,17 @@ module ActionAccess
       actions = Array(actions).map(&:to_sym)
       controller = get_controller_name(resource, options)
       @rules[controller] ||= {}
-      @rules[controller][clearance_level] = actions
+      @rules[controller][clearance_level] ||= []
+      @rules[controller][clearance_level] += actions
+      @rules[controller][clearance_level].uniq!
       return nil
     end
 
-    # Check if a given clearance level allows to perform certain action on a resource.
-    #
+    # Check if a given clearance level allows to perform an action on a resource.
     # Clearance level and resource can be either plural or singular.
     #
     # == Examples:
+    #
     #   lets? :users, :create, :profiles
     #   lets? :users, :create, @profile
     #   lets? :users, :create, ProfilesController

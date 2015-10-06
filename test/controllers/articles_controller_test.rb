@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ArticlesControllerTest < ActionController::TestCase
-  test "any access with no clearance level gets redirected" do
+  test "accesses with no clearance level get redirected" do
     # Undefined role
     get :new
     assert_redirected_to root_url
@@ -10,32 +10,54 @@ class ArticlesControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
-  test "any access with undefined clearance level gets redirected" do
-    # The role doesn't exist (undefined)
-    get :new, nil, {role: :super}
+  test "accesses with undefined clearance level get redirected" do
+    # The role doesn't exist (haven't been defined)
+    get :new, nil, {roles: :root}
     assert_redirected_to root_url
 
-    post :create, nil, {role: :super}
+    post :create, nil, {roles: :root}
     assert_redirected_to root_url
   end
 
-  test "any unauthorized access gets redirected" do
+  test "unauthorized accesses get redirected" do
     # The roles exist but aren't authorized.
-    get :new, nil, {role: :user}
+    post :create, nil, {roles: :editor}
     assert_redirected_to root_url
 
-    post :create, nil, {role: :editor}
+    get :edit, {id: 1}, {roles: :user}
     assert_redirected_to root_url
   end
 
   test "authorized accesses aren't redirected" do
-    get :new, nil, {role: :admin}        # Admins can create articles
+    get :new, nil, {roles: :admin}
     assert_response :success
 
-    get :edit, {id: 1}, {role: :editor}  # Editors can edit articles
+    get :edit, {id: 1}, {roles: :editor}
+    assert_response :success
+  end
+
+  test "many clearance levels can be defined in one statement" do
+    get :index, nil, {roles: :editor}
     assert_response :success
 
-    get :show, {id: 1}, {role: :user}    # Users can view articles
+    get :index, nil, {roles: :cleaner}
     assert_response :success
+
+    get :index, nil, {roles: :user}
+    assert_response :success
+  end
+
+  test "users can have many clearance levels" do
+    post :create, nil, {roles: [:editor, :cleaner]}
+    assert_redirected_to root_url
+
+    get :index, nil, {roles: [:editor, :cleaner]}
+    assert_response :success
+
+    get :edit, {id: 1}, {roles: [:editor, :cleaner]}
+    assert_response :success
+
+    delete :destroy, {id: 1}, {roles: [:editor, :cleaner]}
+    assert_redirected_to articles_url
   end
 end
