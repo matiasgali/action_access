@@ -11,16 +11,6 @@ class ActionAccessTest < ActiveSupport::TestCase
     keeper.let :editor, [:edit, :update], :posts
     assert_equal true, keeper.lets?(:editor, :edit, :posts)
     assert_equal true, keeper.lets?(:editor, :update, :posts)
-    keeper.let [:user, :nerd], [:index, :show], :posts
-    assert_equal true, keeper.lets?(:user, :index, :posts)
-    assert_equal true, keeper.lets?(:nerd, :index, :posts)
-    assert_equal true, keeper.lets?([:user, :other, :whatnot], :index, :posts)
-    assert_equal true, keeper.lets?([:other, :user, :whatnot], :index, :posts)
-    assert_equal true, keeper.lets?([:other, :whatnot, :user], :index, :posts)
-    assert_equal true, keeper.lets?([:user, :nerd, :other], :index, :posts)
-    assert_equal true, keeper.lets?([:nerd, :user, :other], :index, :posts)
-    assert_equal true, keeper.lets?([:other, :nerd, :user], :index, :posts)
-    assert_equal true, keeper.lets?([:other, :user, :nerd], :index, :posts)
   end
 
   test "authorized accesses within namespaces are allowed" do
