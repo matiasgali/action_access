@@ -21,7 +21,8 @@ module ActionAccess
     #   let :admins, [:edit, :update], Admin::ArticlesController
     #   # Admins can access 'admin/articles#edit' and 'admin/articles#update'.
     #
-    def let(clearance_levels, actions, resource, options = {})
+    def let(clearance_level, actions, resource, options = {})
+      clearance_level = clearance_level.to_s.singularize.to_sym
       actions = Array(actions).map(&:to_sym)
       controller = get_controller_name(resource, options)
       @rules[controller] ||= {}
@@ -46,7 +47,8 @@ module ActionAccess
     #   lets? :admin, :edit, Admin::ArticlesController
     #   # True if any admin is allowed to access 'admin/articles#edit'.
     #
-    def lets?(clearance_levels, action, resource, options = {})
+    def lets?(clearance_level, action, resource, options = {})
+      clearance_level = clearance_level.to_s.singularize.to_sym
       action = action.to_sym
       controller = get_controller_name(resource, options)
 
@@ -56,12 +58,10 @@ module ActionAccess
       return false unless rules
 
       # Check rules
-      if Array(rules[:all]).include?(:all) || Array(rules[:all]).include?(action) then return true end
-      [*clearance_levels].each do |clearance_level|
-        clearance_level = clearance_level.to_s.singularize.to_sym
-        if Array(rules[clearance_level]).include?(:all) || Array(rules[clearance_level]).include?(action) then return true end
-      end
-      return false
+      Array(rules[:all]).include?(:all)               ||
+      Array(rules[:all]).include?(action)             ||
+      Array(rules[clearance_level]).include?(:all)    ||
+      Array(rules[clearance_level]).include?(action)
     end
 
 
