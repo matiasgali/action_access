@@ -16,14 +16,32 @@ module ActionAccess
       # Set an access rule for the current controller.
       # It will automatically lock the controller if it wasn't already.
       #
-      # == Example:
-      # Add the following to ArticlesController to allow admins to edit articles.
-      #   let :admin, [:edit, :update]
       #
-      def let(clearance_level, permissions)
+      # == Parameters
+      #
+      # +clearance_levels+:: single clearance level (string or symbol) or list
+      #   of them (list of parameters or array), either singular or plural.
+      #   Accepts the special keyword +:all+ (every clearance level, even none).
+      #
+      # +permissions+:: controller action (string or symbol) or list of them (array).
+      #   Accepts the special keyword +:all+ (every action in the controller).
+      #
+      #
+      # == Example:
+      #
+      #   class ArticlesControler < ApplicationController
+      #     let :admins, :all                           # admins can do anything
+      #     let :editors, :reviewers, [:edit, :update]  # editors and reviewers can edit articles
+      #     let :all, [:index, :show]                   # anyone can view articles
+      #
+      #     # ...
+      #   end
+      #
+      def let(*clearance_levels, permissions)
         lock_access unless access_locked?
         keeper = ActionAccess::Keeper.instance
-        keeper.let clearance_level, permissions, self
+        clearance_levels = Array(clearance_levels).flatten
+        clearance_levels.each { |c| keeper.let c, permissions, self }
       end
     end
 
@@ -41,10 +59,19 @@ module ActionAccess
         ActionAccess::Keeper.instance
       end
 
-      # Clearance level of the current user (override to customize).
-      def current_clearance_level
-        if defined? current_user and current_user.respond_to?(:clearance_level)
-          [*current_user.clearance_level].each { |x| x.to_s.to_sym }
+      # Current user's clearance levels (override to customize).
+      def current_clearance_levels
+        # Notify deprecation of `current_clearance_level` (singular)
+        if defined? current_clearance_level
+          ActiveSupport::Deprecation.warn \
+            '[Action Access] The use of "current_clearance_level" '   +
+            'is going to be deprecated in the next release, rename ' +
+            'it to "current_clearance_levels" (plural).'
+          return current_clearance_level
+        end
+
+        if defined?(current_user) and current_user.respond_to?(:clearance_levels)
+          current_user.clearance_levels
         else
           :guest
         end
@@ -57,9 +84,10 @@ module ActionAccess
 
       # Validate access to the current route.
       def validate_access!
-        clearance_level = current_clearance_level
         action = self.action_name
-        not_authorized! unless keeper.lets? clearance_level, action, self.class
+        clearance_levels = Array(current_clearance_levels)
+        authorized = clearance_levels.any? { |c| keeper.lets? c, action, self.class }
+        not_authorized! unless authorized
       end
 
       # Redirect if not authorized.

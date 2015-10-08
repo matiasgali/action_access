@@ -1,7 +1,8 @@
 class ArticlesController < ApplicationController
   let :admin, :all
-  let :editor, [:index, :show, :edit, :update]
-  let :user, [:index, :show]
+  let :editor, [:edit, :update]
+  let :cleaner, :destroy
+  let :editor, :cleaner, :user, [:index, :show]
 
   # GET /articles
   def index
