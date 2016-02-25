@@ -2,13 +2,25 @@
 [![Build Status](https://travis-ci.org/matiasgagliano/action_access.svg?branch=v0.0.2)](https://travis-ci.org/matiasgagliano/action_access)
 [![Security](https://hakiri.io/github/matiasgagliano/action_access/master.svg)](https://hakiri.io/github/matiasgagliano/action_access/master)
 
-Action Access is an access control system for Ruby on Rails. It provides a
-modular and easy way to secure applications and handle permissions.
+Action Access is a **modular**, **concise** and really **easy** to use **access
+control system** for Ruby on Rails. It allows to secure applications and handle
+permissions in a breeze.
 
-It works at controller level focusing on what **actions** are accessible for
-the current user instead of messing with models and their attributes.
+* Focuses on what **actions** are accessible for the current user instead of
+messing with models and their attributes.
 
-It also provides utilities for thorough control and some useful view helpers.
+* **Declarative** and **succinct** authorization statements right in the
+controller. Everything related to a controller is within the controller
+(self-contained) so that **no stale code** is left behind when
+refactoring, moving or removing controllers.
+
+* Totally **independent** from the authentication system and can work without
+user models or predefined roles.
+
+* Batteries are included, **utilities** for thorough control and useful
+**view helpers** come out of the box.
+
+* No configuration files, rake tasks or migrations needed.
 
 
 ## Installation
@@ -135,7 +147,7 @@ These statements lock the controller and set the following:
  * _Reviewers_ can list, view and edit articles.
  * _Anyone else_ can **only** list and view articles.
 
-This case uses the special keyword `:all`, it means everyone if passed as the
+This case uses the special keyword `:all`. It means everyone if passed as the
 first argument or every action if passed as the last one.
 
 Again, any unauthorized request will be rejected and redirected with an alert.
@@ -149,9 +161,8 @@ you both **define** them and **set their permissions**. The only requirement is
 that the clearance levels from the authorizations match at least one from the
 list returned by `current_clearance_levels`.
 
-This makes it easier to embrace modular designs, makes controllers
-self-contained because everything related to a controller is within the
-controller and avoids leaving unnecessary or unused code after refactoring.
+This makes it easier to embrace modular designs, makes controllers to be
+self-contained and avoids leaving unnecessary or unused code after refactoring.
 
 
 ## Advanced configuration
@@ -267,7 +278,7 @@ of the resource and the namespace (optional). In the end it returns a boolean.
 ```
 
 Just like the default `current_clearance_levels` in controllers, `can?`
-depends on the `clearance_levels` method in the model too.
+depends on a `clearance_levels` method in the model too.
 
 Following up the `User` model from before:
 
