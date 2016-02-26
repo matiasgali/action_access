@@ -1,5 +1,26 @@
+language: ruby
+sudo: false
+cache: bundler
+
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.6
-  - 2.2.2
+  - 2.1.8
+  - 2.2.4
+  - 2.3.0
+  - ruby-head
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+  fast_finish: true
+
+before_install:
+  - gem install bundler
+  - bundler --version
+
+before_script:
+  - bundle update
+
+script: bundle exec rake test
+
+notifications:
+  email: false
