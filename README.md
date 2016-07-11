@@ -1,6 +1,5 @@
 # Action Access
-[![Build Status](https://travis-ci.org/matiasgagliano/action_access.svg?branch=v0.0.2)](https://travis-ci.org/matiasgagliano/action_access)
-[![Security](https://hakiri.io/github/matiasgagliano/action_access/master.svg)](https://hakiri.io/github/matiasgagliano/action_access/master)
+[![Build Status](https://travis-ci.org/matiasgagliano/action_access.svg?branch=master)](https://travis-ci.org/matiasgagliano/action_access)
 
 Action Access is a **modular**, **concise** and really **easy** to use **access
 control system** for Ruby on Rails. It allows to secure applications and handle
