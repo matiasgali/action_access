@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.1
+-----
+
+- Support Rails 5.
+
+
 0.1.0
 -----
 
@@ -19,7 +25,7 @@ Changelog
 -----
 
 - Update dependencies.
-- Support Rails 2.2.2.
+- Support Ruby 2.2.2.
 
 
 0.0.2

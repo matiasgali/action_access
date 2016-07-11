@@ -12,52 +12,52 @@ class ArticlesControllerTest < ActionController::TestCase
 
   test "accesses with undefined clearance level get redirected" do
     # The role doesn't exist (haven't been defined)
-    get :new, nil, {roles: :root}
+    get :new, session: { roles: :root }
     assert_redirected_to root_url
 
-    post :create, nil, {roles: :root}
+    post :create, session: { roles: :root }
     assert_redirected_to root_url
   end
 
   test "unauthorized accesses get redirected" do
     # The roles exist but aren't authorized.
-    post :create, nil, {roles: :editor}
+    post :create, session: { roles: :editor }
     assert_redirected_to root_url
 
-    get :edit, {id: 1}, {roles: :user}
+    get :edit, params: { id: 1 }, session: { roles: :user }
     assert_redirected_to root_url
   end
 
   test "authorized accesses aren't redirected" do
-    get :new, nil, {roles: :admin}
+    get :new, session: { roles: :admin }
     assert_response :success
 
-    get :edit, {id: 1}, {roles: :editor}
+    get :edit, params: { id: 1 }, session: { roles: :editor }
     assert_response :success
   end
 
   test "many clearance levels can be defined in one statement" do
-    get :index, nil, {roles: :editor}
+    get :index, session: { roles: :editor }
     assert_response :success
 
-    get :index, nil, {roles: :cleaner}
+    get :index, session: { roles: :cleaner }
     assert_response :success
 
-    get :index, nil, {roles: :user}
+    get :index, session: { roles: :user }
     assert_response :success
   end
 
   test "users can have many clearance levels" do
-    post :create, nil, {roles: [:editor, :cleaner]}
+    post :create, session: { roles: [:editor, :cleaner] }
     assert_redirected_to root_url
 
-    get :index, nil, {roles: [:editor, :cleaner]}
+    get :index, session: { roles: [:editor, :cleaner] }
     assert_response :success
 
-    get :edit, {id: 1}, {roles: [:editor, :cleaner]}
+    get :edit, params: { id: 1 }, session: { roles: [:editor, :cleaner] }
     assert_response :success
 
-    delete :destroy, {id: 1}, {roles: [:editor, :cleaner]}
+    delete :destroy, params: { id: 1 }, session: { roles: [:editor, :cleaner] }
     assert_redirected_to articles_url
   end
 end
