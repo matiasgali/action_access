@@ -2,6 +2,10 @@ module ActionAccess
   class Railtie < Rails::Railtie
     config.eager_load_namespaces << ActionAccess
 
+    config.to_prepare do
+      ActionAccess::Keeper.instance.reload
+    end
+
     initializer 'action_access.controller_additions' do
       # Extend ActionController::Base
       ActiveSupport.on_load :action_controller do

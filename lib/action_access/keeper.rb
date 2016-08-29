@@ -6,6 +6,10 @@ module ActionAccess
       @rules = {}
     end
 
+    def reload
+      @rules = {}
+    end
+
     # Set clearance to perform actions over a resource.
     # Clearance level and resource can be either plural or singular.
     #
