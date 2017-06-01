@@ -48,7 +48,7 @@ module ActionAccess
 
     def self.included(base)
       base.extend ClassMethods
-      base.helper_method :keeper
+      base.helper_method(:keeper) if base.respond_to?(:helper_method)
     end
 
 
