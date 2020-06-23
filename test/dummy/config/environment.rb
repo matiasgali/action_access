@@ -30,9 +30,6 @@ module Dummy
     # Disable request forgery protection in test environment.
     config.action_controller.allow_forgery_protection = false
 
-    # Tell Action Mailer not to deliver emails to the real world.
-    config.action_mailer.delivery_method = :test
-
     # Print deprecation notices to the stderr.
     config.active_support.deprecation = :stderr
   end

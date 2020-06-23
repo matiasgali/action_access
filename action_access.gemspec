@@ -17,7 +17,8 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- test/*`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_dependency 'rails', '>= 4.1'
+  s.add_dependency 'railties', '>= 4.1'
+  s.add_dependency 'activerecord', '>= 4.1'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'bundler', '>= 1.6'
